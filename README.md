@@ -1,3 +1,16 @@
+# *Fork information*
+
+This fork adds the [unicase](https://crates.io/crates/unicase) crate for case-insensitive matching of font family names according to the [CSS Fonts Module Level 3 spec](https://www.w3.org/TR/2018/REC-css-fonts-3-20180920/#font-family-casing).
+
+You can use it by adding a `[patch]` section in the Cargo.toml manifest at the root of the workspace.
+
+```toml
+[patch.crates-io]
+"fontdb" = { git = 'https://github.com/TimoWilhelm/fontdb.git', branch = 'master' }
+```
+
+
+
 # fontdb
 ![Build Status](https://github.com/RazrFalcon/fontdb/workflows/Rust/badge.svg)
 [![Crates.io](https://img.shields.io/crates/v/fontdb.svg)](https://crates.io/crates/fontdb)
