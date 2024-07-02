@@ -17,6 +17,7 @@ log = "0.4"
 memmap2 = { version = "0.9", optional = true }
 slotmap = { version = "1.0.6", default-features = false }
 tinyvec = { version = "1.6.0", features = ["alloc"] }
+unicase = "2.7"
 
 [dependencies.ttf-parser]
 version = "0.24"

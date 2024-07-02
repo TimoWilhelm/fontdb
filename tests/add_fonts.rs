@@ -1,6 +1,8 @@
 const DEMO_TTF: &[u8] = include_bytes!("./fonts/Tuffy.ttf");
 use std::sync::Arc;
 
+use unicase::UniCase;
+
 #[test]
 fn add_fonts_and_get_ids_back() {
     env_logger::init();
@@ -11,5 +13,6 @@ fn add_fonts_and_get_ids_back() {
     let id = ids[0];
 
     let font = font_db.face(id).unwrap();
-    assert!(font.families.iter().any(|(name, _)| name == "Tuffy"));
+    assert!(font.families.iter().any(|(name, _)| name == &UniCase::new("Tuffy")));
+    assert!(font.families.iter().any(|(name, _)| name == &UniCase::new("tuffy")));
 }
