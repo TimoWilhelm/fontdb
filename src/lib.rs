@@ -74,6 +74,7 @@ pub use ttf_parser::Width as Stretch;
 
 use slotmap::SlotMap;
 use tinyvec::TinyVec;
+use unicase::UniCase;
 
 /// A unique per database face ID.
 ///
@@ -626,14 +627,14 @@ impl Database {
     /// Returns the generic family name or the `Family::Name` itself.
     ///
     /// Generic family names should be set via `Database::set_*_family` methods.
-    pub fn family_name<'a>(&'a self, family: &'a Family) -> &'a str {
+    pub fn family_name<'a>(&'a self, family: &'a Family) -> UniCase<&str> {
         match family {
-            Family::Name(name) => name,
-            Family::Serif => self.family_serif.as_str(),
-            Family::SansSerif => self.family_sans_serif.as_str(),
-            Family::Cursive => self.family_cursive.as_str(),
-            Family::Fantasy => self.family_fantasy.as_str(),
-            Family::Monospace => self.family_monospace.as_str(),
+            Family::Name(name) => UniCase::new(name),
+            Family::Serif => UniCase::new(self.family_serif.as_str()),
+            Family::SansSerif => UniCase::new(self.family_sans_serif.as_str()),
+            Family::Cursive => UniCase::new(self.family_cursive.as_str()),
+            Family::Fantasy => UniCase::new(self.family_fantasy.as_str()),
+            Family::Monospace => UniCase::new(self.family_monospace.as_str()),
         }
     }
 
@@ -813,7 +814,7 @@ pub struct FaceInfo {
     /// Meaning it will contain _Arial_ and not _Arial Bold_.
     ///
     /// [name ID]: https://docs.microsoft.com/en-us/typography/opentype/spec/name#name-ids
-    pub families: Vec<(String, Language)>,
+    pub families: Vec<(UniCase<String>, Language)>,
 
     /// A PostScript name.
     ///
@@ -1034,7 +1035,7 @@ fn parse_face_info(source: Source, data: &[u8], index: u32) -> Result<FaceInfo, 
     })
 }
 
-fn parse_names(raw_face: &ttf_parser::RawFace) -> Option<(Vec<(String, Language)>, String)> {
+fn parse_names(raw_face: &ttf_parser::RawFace) -> Option<(Vec<(UniCase<String>, Language)>, String)> {
     const NAME_TAG: ttf_parser::Tag = ttf_parser::Tag::from_bytes(b"name");
     let name_data = raw_face.table(NAME_TAG)?;
     let name_table = ttf_parser::name::Table::parse(name_data)?;
@@ -1073,12 +1074,12 @@ fn parse_names(raw_face: &ttf_parser::RawFace) -> Option<(Vec<(String, Language)
     Some((families, post_script_name))
 }
 
-fn collect_families(name_id: u16, names: &ttf_parser::name::Names) -> Vec<(String, Language)> {
+fn collect_families(name_id: u16, names: &ttf_parser::name::Names) -> Vec<(UniCase<String>, Language)> {
     let mut families = Vec::new();
     for name in names.into_iter() {
         if name.name_id == name_id && name.is_unicode() {
             if let Some(family) = name_to_unicode(&name) {
-                families.push((family, name.language()));
+                families.push((UniCase::new(family), name.language()));
             }
         }
     }
@@ -1091,7 +1092,7 @@ fn collect_families(name_id: u16, names: &ttf_parser::name::Names) -> Vec<(Strin
         for name in names.into_iter() {
             if name.name_id == name_id && name.is_mac_roman() {
                 if let Some(family) = name_to_unicode(&name) {
-                    families.push((family, name.language()));
+                    families.push((UniCase::new(family), name.language()));
                     break;
                 }
             }
