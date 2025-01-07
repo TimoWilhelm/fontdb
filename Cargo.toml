@@ -1,6 +1,6 @@
 [package]
 name = "fontdb"
-version = "0.18.0"
+version = "0.23.0"
 authors = ["Yevhenii Reizner <razrfalcon@gmail.com>"]
 edition = "2018"
 description = "A simple, in-memory font database with CSS-like queries."
@@ -20,9 +20,9 @@ tinyvec = { version = "1.6.0", features = ["alloc"] }
 unicase = "2.7"
 
 [dependencies.ttf-parser]
-version = "0.21"
+version = "0.25"
 default-features = false
-features = ["opentype-layout", "apple-layout", "variable-fonts", "glyph-names"]
+features = ["opentype-layout", "apple-layout", "variable-fonts", "glyph-names", "no-std-float"]
 
 [target.'cfg(all(unix, not(any(target_os = "macos", target_os = "android"))))'.dependencies]
 fontconfig-parser = { version = "0.5", optional = true, default-features = false }

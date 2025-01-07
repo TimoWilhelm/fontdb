@@ -5,6 +5,29 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.23.0] - 2024-10-09
+### Changed
+- `ttf-parser` updated.
+
+## [0.22.0] - 2024-09-09
+### Changed
+- Fallback to known font dirs if none were loaded via fontconfig. Linux-only.
+  [@MoSal](https://github.com/@MoSal)
+
+## [0.21.0] - 2024-08-06
+### Added
+- Symlinked files and directories will now be included when loading system fonts.
+  [@jcdickinson](https://github.com/@jcdickinson)
+
+## [0.20.0] - 2024-07-02
+### Changed
+- `ttf-parser` updated.
+
+## [0.19.0] - 2024-07-02
+### Changed
+- `ttf-parser` updated.
+
 ## [0.18.0] - 2024-06-01
 ### Changed
 - `Database::push_face_info` returns an `ID` now.
@@ -198,7 +221,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Stretch processing. `ttf-parser` was incorrectly parsing this property.
 
-[Unreleased]: https://github.com/RazrFalcon/fontdb/compare/v0.18.0...HEAD
+[Unreleased]: https://github.com/RazrFalcon/fontdb/compare/v0.23.0...HEAD
+[0.23.0]: https://github.com/RazrFalcon/fontdb/compare/v0.22.0...v0.23.0
+[0.22.0]: https://github.com/RazrFalcon/fontdb/compare/v0.21.0...v0.22.0
+[0.21.0]: https://github.com/RazrFalcon/fontdb/compare/v0.20.0...v0.21.0
+[0.20.0]: https://github.com/RazrFalcon/fontdb/compare/v0.19.0...v0.20.0
+[0.19.0]: https://github.com/RazrFalcon/fontdb/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/RazrFalcon/fontdb/compare/v0.17.0...v0.18.0
 [0.17.0]: https://github.com/RazrFalcon/fontdb/compare/v0.16.2...v0.17.0
 [0.16.2]: https://github.com/RazrFalcon/fontdb/compare/v0.16.1...v0.16.2
